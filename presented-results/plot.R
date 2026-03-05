@@ -30,42 +30,6 @@ domain_label <- function(x) parse(text = paste0(x, "^3"))
 ops <- function(n, s) 100 * s * n**3
 
 {
-  data <- read.csv("gpp/biofvms.csv", header = TRUE, sep = ",")
-  
-  data = filter(data, std_dev / time < 0.05)
-
-  data <- data %>%
-    group_by(across(-matches("(init_time)|(time)|(std_dev)"))) %>%
-    slice_min(time) %>%
-    ungroup()
-  data <- data.frame(data)
-
-  data$precision[data$precision == "D"] <- "Double precision"
-  data$precision[data$precision == "S"] <- "Single precision"
-
-  data = filter(data, s == 1 & nx %in% c(50, 100, 150, 200, 250, 300, 400, 500, 600))
-
-  ggsave("temp-local-normalized.pdf",
-    device = "pdf", units = "in", scale = S, width = W, height = H,
-    ggplot(data, aes(
-      x = nx, y = time / ops(nx, s)
-    )) +
-      geom_point(size = point_size) +
-      geom_line(linewidth = line_size) +
-      xlab("Domain size (log-scale)") +
-      ylab("Time per voxel (log-scale)") +
-      scale_color_brewer(palette = "Accent") +
-      # labs(color = "Substrates", shape = "Substrates") +
-      scale_y_log10(labels = sisec) +
-      scale_x_log10(labels = domain_label, breaks = c(64, 128, 256, 400, 600)) +
-      facet_wrap(~factor(precision, levels = c("Single precision", "Double precision")), scales="free") +
-      theme +
-      background_grid() +
-      theme(legend.position = "bottom")
-  )
-}
-
-{
   data <- read.csv("gpp/baselines.csv", header = TRUE, sep = ",")
   
   data = filter(data, std_dev / time < 0.05)
