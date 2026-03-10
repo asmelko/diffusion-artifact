@@ -71,12 +71,12 @@ ops <- function(n, s) 100 * s * n**3
     )) +
       geom_point(size = point_size) +
       geom_line(linewidth = line_size) +
-      xlab("Domain size (log-scale)") +
+      xlab("Domain size") +
       ylab("Time per voxel (log-scale)") +
       scale_color_brewer(palette = "Accent") +
       labs(color = "Algorithm", shape = "Algorithm") +
       scale_y_log10(labels = sisec) +
-      scale_x_log10(labels = domain_label, breaks = c(64, 128, 256, 400, 600)) +
+      scale_x_continuous(labels = domain_label) +
       facet_wrap(~factor(precision, levels = c("Single precision", "Double precision")), scales="free") +
       theme +
       background_grid() +
@@ -114,9 +114,9 @@ ops <- function(n, s) 100 * s * n**3
   data = filter(data, s == 1 & nx %in% c( 100, 150, 200, 250, 300, 400, 450, 500, 550, 600))
 
   data$x_tile_size[data$x_tile_size == "10000"] <- "whole X (space-local)"
-  data$x_tile_size[data$x_tile_size == "1"] <- "1 (baseline)"
+  data$x_tile_size[data$x_tile_size == "1"] <- "1 (temp-local)"
   
-  data$x_tile_size <- factor(data$x_tile_size, levels = c("16", "32", "48", "64", "whole X (space-local)", "1 (baseline)"))
+  data$x_tile_size <- factor(data$x_tile_size, levels = c("16", "32", "48", "64", "whole X (space-local)", "1 (temp-local)"))
 
   ggsave("temp-local-tile.pdf",
     device = "pdf", units = "in", scale = S, width = W, height = H,
@@ -224,12 +224,12 @@ ops <- function(n, s) 100 * s * n**3
     )) +
       geom_point(size = point_size) +
       geom_line(linewidth = line_size) +
-      xlab("Domain size (log-scale)") +
+      xlab("Domain size") +
       ylab("Time per voxel (log-scale)") +
       scale_color_manual(values = RColorBrewer::brewer.pal(7, "YlGnBu")[2:9]) +
       labs(color = "Cores division") +
       scale_y_log10(labels = sisec) +
-      scale_x_log10(labels = domain_label, breaks = c(64, 128, 256, 400, 600)) +
+      scale_x_continuous(labels = domain_label) +
       facet_wrap(~factor(precision, levels = c("Single precision", "Double precision")), scales="free") +
       theme +
       background_grid() +
@@ -254,11 +254,6 @@ for (prefix in c("gpp", "hbm"))
   data_temporal_tile = filter(data_temporal_tile, x_tile_size == 32)
   data_temporal_tile <- subset(data_temporal_tile, select = c(algorithm, precision, dims, iterations, s, nx, ny, nz, init_time, time, std_dev))
 
-  data_temporal_tile_trans <- read.csv(paste0(prefix, "/transpose-temporal.csv"), header = TRUE, sep = ",")
-  data_temporal_tile_trans$algorithm <- "tiled-transposed"
-  data_temporal_tile_trans = filter(data_temporal_tile_trans, x_tile_size == 32)
-  data_temporal_tile_trans <- subset(data_temporal_tile_trans, select = c(algorithm, precision, dims, iterations, s, nx, ny, nz, init_time, time, std_dev))
-
   partial_blocking <- read.csv(paste0(prefix, "/partial-blocking.csv"), header = TRUE, sep = ",")
   partial_blocking <- subset(partial_blocking, select = c(algorithm, precision, dims, iterations, s, nx, ny, nz, init_time, time, std_dev))
   partial_blocking["algorithm"] <- "planar"
@@ -272,7 +267,7 @@ for (prefix in c("gpp", "hbm"))
   full_blocking["algorithm"] <- "blocked"
 
   data <- c()
-  data <- rbind(data, data_baseline, data_temporal, data_temporal_tile, data_temporal_tile_trans, partial_blocking)
+  data <- rbind(data, data_baseline, data_temporal, data_temporal_tile, partial_blocking)
 
   if (prefix == "gpp")
     data = filter(data, std_dev / time < 0.05)
@@ -283,7 +278,7 @@ for (prefix in c("gpp", "hbm"))
 
   data = filter(data, s == 1 & nx %in% c(50, 100, 150, 200, 250, 300, 400, 500, 600))
 
-  data$algorithm <- factor(data$algorithm, levels = c("space-local", "temp-local", "tiled", "tiled-transposed", "planar", "blocked"))
+  data$algorithm <- factor(data$algorithm, levels = c("temp-local", "space-local", "tiled", "tiled-transposed", "planar", "blocked"))
 
   data$precision[data$precision == "D"] <- "Double precision"
   data$precision[data$precision == "S"] <- "Single precision"
@@ -301,9 +296,9 @@ for (prefix in c("gpp", "hbm"))
   data <- data.frame(data)
 
   if (prefix == "gpp")
-    data$machine = "DDR"
+    data$machine = "DDR5"
   else
-    data$machine = "HBM"
+    data$machine = "HBM2"
 
   data_both = rbind(data_both, data)
 }
@@ -316,9 +311,9 @@ ggsave("all-best.pdf",
   )) +
     geom_point(size = point_size) +
     geom_line(linewidth = line_size) +
-    xlab("Domain size (log-scale)") +
+    xlab("Domain size") +
     ylab("Time per voxel (log-scale)") +
-    scale_color_brewer(palette = "Accent") +
+    scale_color_brewer(palette = "Set2") +
     labs(color = "Algorithm", shape = "Algorithm") +
     scale_y_log10(labels = sisec) +
     scale_x_continuous(labels = domain_label) +
