@@ -1,0 +1,10 @@
+ Targetting Digital twins of clinical trials
+    -> 2D problem 
+    -> Cell Culture Plate - Petri dish
+        ->  | Diameter (mm) | Height (mm) | Use Case                           |
+            | ------------- | ----------- | ---------------------------------- |
+            | 35 mm         | 10 mm       | Small-scale cultures, microscopy   |
+            | 60 mm         | 15 mm       | Cell culture                       |
+            | 90 mm         | 15 mm       | Microbial cultures (standard)      |
+            | 100 mm        | 20 mm       | Large cultures or sample splitting |
+            | 150 mm        | 20 mm       | Large-scale or colony isolation    |

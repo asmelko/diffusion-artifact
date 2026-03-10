@@ -1,0 +1,16 @@
+{
+    "dims": 3,
+    "dx": 20,
+    "dy": 20,
+    "dz": 20,
+    "nx": 80,
+    "ny": 80,
+    "nz": 80,
+    "substrates_count": 16,
+    "iterations": 1,
+    "dt": 0.01,
+    "diffusion_coefficients": 10000,
+    "decay_rates": 0.01,
+    "initial_conditions": 1000,
+    "gaussian_pulse": false
+}

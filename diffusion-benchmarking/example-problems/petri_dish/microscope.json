@@ -1,0 +1,15 @@
+{
+    "dims": 3,
+    "dx": 20,
+    "dy": 20,
+    "dz": 20,
+    "nx": 1750,
+    "ny": 1750,
+    "nz": 500,
+    "substrates_count": 1,
+    "iterations": 1,
+    "dt": 0.01,
+    "diffusion_coefficients": 10000,
+    "decay_rates": 0.1,
+    "initial_conditions": 1000
+}

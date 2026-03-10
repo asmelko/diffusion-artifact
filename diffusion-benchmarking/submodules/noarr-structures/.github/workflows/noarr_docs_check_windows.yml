@@ -1,0 +1,29 @@
+name: Docs check - Windows
+
+on:
+  push:
+    paths:
+    - 'include/**'
+    - 'docs/**'
+    - 'docs_check/**'
+    - '.github/workflows/noarr_docs_check_windows.yml'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+        check-latest: true
+
+    - name: Activate the Developer Command Prompt for VS
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Test
+      working-directory: ${{github.workspace}}\docs_check
+      run: python .\check.py

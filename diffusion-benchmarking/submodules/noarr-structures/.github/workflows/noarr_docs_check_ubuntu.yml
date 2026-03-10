@@ -1,0 +1,22 @@
+name: Docs check - Ubuntu-24.04
+
+on:
+  push:
+    paths:
+    - 'include/**'
+    - 'docs/**'
+    - 'docs_check/**'
+    - '.github/workflows/noarr_docs_check_ubuntu.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install gcc
+      run: sudo apt-get update && sudo apt-get install -y g++ clang
+
+    - name: Test
+      run: docs_check/check

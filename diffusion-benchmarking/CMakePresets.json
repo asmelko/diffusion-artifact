@@ -1,0 +1,98 @@
+{
+    "version": 8,
+    "$schema": "https://cmake.org/cmake/help/latest/_downloads/3e2d73bff478d88a7de0de736ba5e361/schema.json",
+    "configurePresets": [
+        {
+            "name": "Debug",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CXX_FLAGS": "-Og",
+                "USE_ASAN": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "NO_PAPI": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++",
+                "NO_PAPI": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        },
+        {
+            "name": "RelFast",
+            "inherits": "Release",
+            "binaryDir": "${sourceDir}/build/relfast",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "",
+                "CMAKE_CXX_FLAGS": "-Ofast -DNDEBUG"
+            }
+        },
+        {
+            "name": "RelProf",
+            "inherits": "Release",
+            "binaryDir": "${sourceDir}/build/relprof",
+            "cacheVariables": {
+                "NO_PAPI": {
+                    "type": "BOOL",
+                    "value": "OFF"
+                }
+            }
+        },
+        {
+            "name": "RiscRel",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/riscrel",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "${sourceDir}/.rave/build/llvm-cross/llvm-EPI-development-toolchain-cross/bin/clang",
+                "CMAKE_CXX_COMPILER": "${sourceDir}/.rave/build/llvm-cross/llvm-EPI-development-toolchain-cross/bin/clang++",
+                "RISCV_CROSSCOMPILE": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "NO_PAPI": {
+                    "type": "BOOL",
+                    "value": "ON"
+                },
+                "REDUCED_KERNELS_SET": {
+                    "type": "BOOL",
+                    "value": "ON"
+                }
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Benchmarking",
+            "description": "Builds diffuse executable ready for the benchmarking.",
+            "configurePreset": "RelFast",
+            "targets": [
+                "diffuse"
+            ]
+        },
+        {
+            "name": "Profiling",
+            "description": "Builds diffuse executable ready for the profiling.",
+            "displayName": "",
+            "configurePreset": "RelProf",
+            "targets": [
+                "diffuse"
+            ]
+        }
+    ]
+}

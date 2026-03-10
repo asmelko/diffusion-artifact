@@ -1,0 +1,81 @@
+{
+    "name": "general-uniform",
+    "groups": {
+        "s1-f": {
+            "sizes": [
+                "50x50x50x1x1",
+                "100x100x100x1x1",
+                "150x150x150x1x1",
+                "200x200x200x1x1",
+                "250x250x250x1x1",
+                "300x300x300x1x1",
+                "350x350x350x1x1",
+                "400x400x400x1x1",
+                "450x450x450x1x1",
+                "500x500x500x1x1",
+                "550x550x550x1x1",
+                "600x600x600x1x1",
+                "700x700x700x1x1"
+            ],
+            "data_type": "float",
+            "default_params": {
+                "inner_iterations": 5,
+                "outer_iterations": 1,
+                "benchmark_kind": "full_solve",
+                "warmup_time": 1
+            },
+            "runs": {
+                "biofvms": {
+                    "alg": "lstcss",
+                    "params": {
+                        "empty": [1]
+                    }
+                },                
+                "baselines": {
+                    "alg": "lstcs",
+                    "params": {
+                        "empty": [1]
+                    }
+                }
+            }
+        },
+        "s1-d": {
+            "sizes": [
+                "50x50x50x1x1",
+                "100x100x100x1x1",
+                "150x150x150x1x1",
+                "200x200x200x1x1",
+                "250x250x250x1x1",
+                "300x300x300x1x1",
+                "350x350x350x1x1",
+                "400x400x400x1x1",
+                "450x450x450x1x1",
+                "500x500x500x1x1",
+                "550x550x550x1x1",
+                "600x600x600x1x1",
+                "700x700x700x1x1"
+            ],
+            "data_type": "double",
+            "default_params": {
+                "inner_iterations": 5,
+                "outer_iterations": 1,
+                "benchmark_kind": "full_solve",
+                "warmup_time": 1
+            },
+            "runs": {
+                "biofvms": {
+                    "alg": "lstcss",
+                    "params": {
+                        "empty": [1]
+                    }
+                },                
+                "baselines": {
+                    "alg": "lstcs",
+                    "params": {
+                        "empty": [1]
+                    }
+                }
+            }
+        }
+    }
+}

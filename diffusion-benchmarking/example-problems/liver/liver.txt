@@ -1,0 +1,5 @@
+    | Parameter | Value in µm (approximate) |
+    | --------- | ------------------------- |
+    | Width     |   200,000 – 230,000 µm    |
+    | Height    |   150,000 – 170,000 µm    |
+    | Thickness |   100,000 – 120,000 µm    |
