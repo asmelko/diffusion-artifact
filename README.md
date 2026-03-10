@@ -74,4 +74,12 @@ To run the complete benchmark, execute
 
 ## Measured results
 
-The measured data and plots were stored in the `presented-results` directory. The directory also contains `plots.R` script, which was used to plot the data. It can be executed by `Rscript plots.R` if you wish to re-generate the plots from the data yourself.
+The measured data and plots were stored in the `presented-results` directory. The directory also contains `plots.R` script, which was used to plot the data. It can be executed by `Rscript plots.R` if you wish to re-generate the plots from the data yourself. Here we describe each figure in the `presented-results/plots` directory:
+
+| Plot | Description | Figure number in paper |
+| --------------------------- | ----------- | -- |
+| `all-best.pdf`| Comparison of all algorithms | Figure 10
+| `data-local-normalized.pdf`| Comparison between temp- and space-local algorithms | Figure 6
+| `full-blocking.pdf`| Different configurations of blocked approach | Figure 9
+| `temp-local-tile-transpose.pdf`| Comparison of planar, tiled and tiled+transposed variants | Figure 8
+| `temp-local-tile.pdf`| Various tile sizes of tiled algorithm compared to the temp- and space- local variants |  Figure 7
